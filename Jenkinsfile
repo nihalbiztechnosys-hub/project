@@ -2,41 +2,32 @@ pipeline {
     agent any
 
     environment {
-        // Securely bind Jenkins credentials to pipeline environment variables
+        // Securely binds your Jenkins stored secrets to Windows environment variables
         NETLIFY_AUTH_TOKEN = credentials('netlify-auth-token')
-        NETLIFY_SITE_ID = credentials('netlify-site-id')
+        NETLIFY_SITE_ID   = credentials('netlify-site-id')
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                // Pulls code from your newly linked GitHub repo
-                checkout scm
-            }
-        }
-
+       
         stage('Install Dependencies') {
             steps {
-                // Installs project dependencies along with the netlify-cli tool
-                sh 'npm install'
-                sh 'npm install netlify-cli --no-save' 
+                // 'bat' runs commands through Windows cmd.exe
+                bat 'npm install'
             }
         }
 
         stage('Build Project') {
             steps {
-                // Compiles your production-ready static assets
-                sh 'npm run build' 
+                // Compiles your Vite application into the 'dist' folder
+                bat 'npm run build'
             }
         }
 
-         stage('Deploy to Netlify') {
+        stage('Deploy to Netlify') {
             steps {
-                // Vite compiles into the 'dist' directory
-                sh './node_modules/.bin/netlify deploy --dir=dist --prod'
+                // Executes the Netlify CLI deployment command via cmd batch syntax
+                bat 'npx netlify deploy --dir=dist --prod'
             }
-        }
-
         }
     }
 }
