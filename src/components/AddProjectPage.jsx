@@ -96,7 +96,7 @@ export default function AddProjectPage({ onClose, onSubmit }) {
           >
             <X className="h-5 w-5" />
           </button>
-          <h1 className="text-lg font-semibold text-[#1a1a2e]">Add Project</h1>
+          <h1 className="text-lg font-semibold text-[#1a1a2e]">New  Project</h1>
         </div>
         <div className="flex items-center gap-2">
           <button
